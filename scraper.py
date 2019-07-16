@@ -2,10 +2,16 @@
 import urllib.request
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import time
 import pandas as pd
 from pprint import pprint
 from datetime import datetime as DateTime, timedelta as TimeDelta
+from dotenv import load_dotenv
+
+options = FirefoxOptions()
+options.add_argument("--headless")
+load_dotenv()
 s = '2019-09-15'
 search_period = 30
 trip_leght = 24
@@ -45,7 +51,7 @@ for day in range(search_period):
     print('To: ' + outbound_date + '  From: ' + inbound_date)
     # Loading webdriver and waiting for page
     urlpage = 'https://www.maxmilhas.com.br/busca-passagens-aereas/RT/MIA/RIO/' + outbound_date + '/' + inbound_date + '/1/0/0/EC'
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(options=options)
     driver.get(urlpage)
     #driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
     time.sleep(40)
