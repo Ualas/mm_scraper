@@ -57,10 +57,11 @@ for day in range(search_period):
     time.sleep(40)
 
     # Scraping elements from page
-    scrape("Outbound")
-    driver.find_element_by_xpath("//span[text()='volta']").click()
-    scrape("Inbound")
-
+    try:
+        scrape("Outbound")
+        driver.find_element_by_xpath("//span[text()='volta']").click()
+        scrape("Inbound")
+    except: continue
     #Closing and Saving
     driver.quit()
 
