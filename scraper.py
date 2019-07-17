@@ -43,7 +43,7 @@ def scrape(way):
         arrival_airport = flightairports[1]
         departure_date = flightdates[0]
         arrival_date = flightdates[1]
-        data.append({"Way:" : way, "Airline" : airline.text , "Departure airport" : departure_airport.text, "Departure date" : departure_date.text, "Departure Time" : departure_time.text, "Duration" : duration.text, "Stops" : stops.text, "Arrival Airport" : arrival_airport.text ,"Arrival Date" : arrival_date.text , "Arrival Time" : arrival_time.text , "Price" : price.text[:-1]})
+        data.append({"Way" : way, "Airline" : airline.text , "Departure airport" : departure_airport.text, "Departure date" : departure_date.text, "Departure Time" : departure_time.text, "Duration" : duration.text, "Stops" : stops.text, "Arrival Airport" : arrival_airport.text ,"Arrival Date" : arrival_date.text , "Arrival Time" : arrival_time.text , "Price" : price.text[:-1]})
 
 for day in range(search_period):
     outbound_date = (date + TimeDelta(days=day)).strftime('%Y-%m-%d')
@@ -58,11 +58,11 @@ for day in range(search_period):
 
     # Scraping elements from page
     scrape("Outbound")
-    driver.find_element_by_xpath("/html/body/div[7]/div[2]/div/div/section/div[2]/div[2]/div/div[1]/header[2]").click()
+    driver.find_element_by_xpath("//span[text()='volta']").click()
     scrape("Inbound")
 
     #Closing and Saving
     driver.quit()
 
 df = pd.DataFrame(data)
-df.to_csv('maxmilhas-hou-rio.csv')
+df.to_csv('maxmilhas-mia-rio.csv')
