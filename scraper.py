@@ -20,7 +20,12 @@ data = []
 
 def scrape(way):
     outbound_flights = driver.find_elements_by_css_selector("div[class^='flight-item ']")
-    print('[', way ,'] Number of Flights:', len(outbound_flights))
+    count_flights = len(outbound_flights)
+    print('[', way ,'] Number of Flights:', count_flights)
+    if count_flights == 0:
+        pprint("Blocked: Sleeping a little")
+        time.sleep(600)
+        outbound_flights = driver.find_elements_by_css_selector("div[class^='flight-item ']")
     for outbound_flight in outbound_flights:
         flighttimes=[]
         flightairports=[]
@@ -37,13 +42,7 @@ def scrape(way):
             flightairports.append(flight_airports)
             flight_dates = detail.find_element_by_css_selector("span[class='flight-data']")
             flightdates.append(flight_dates)
-        departure_time = flighttimes[0]
-        arrival_time = flighttimes[1]
-        departure_airport = flightairports[0]
-        arrival_airport = flightairports[1]
-        departure_date = flightdates[0]
-        arrival_date = flightdates[1]
-        data.append({"Way" : way, "Airline" : airline.text , "Departure airport" : departure_airport.text, "Departure date" : departure_date.text, "Departure Time" : departure_time.text, "Duration" : duration.text, "Stops" : stops.text, "Arrival Airport" : arrival_airport.text ,"Arrival Date" : arrival_date.text , "Arrival Time" : arrival_time.text , "Price" : price.text[:-1]})
+        data.append({"way" : way, "airline" : airline.text , "departure_airport" : flightairports[0].text, "departure_date" : flightdates[0].text, "departure_time" : flightdates[0].text, "duration" : duration.text, "stops" : stops.text, "arrival_airport" : flightairports[1].text ,"arrival_date" : flightdates[0].text , "arrival_time" : flighttimes[1].text , "price" : price.text[:-1]})
 
 for day in range(search_period):
     outbound_date = (date + TimeDelta(days=day)).strftime('%Y-%m-%d')
