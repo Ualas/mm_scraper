@@ -18,8 +18,10 @@ options.add_argument("--headless")
 load_dotenv()
 DBPATH = os.getenv('DBPATH')
 s = '2019-09-15'
-search_period = 30
+search_period = 1
 trip_leght = 24
+departure_city = 'HOU'
+arrival_city = 'RIO'
 date = DateTime.strptime(s, "%Y-%m-%d")
 data = []
 db_table = 'flights'
@@ -48,7 +50,12 @@ def scrape(way):
             flightairports.append(flight_airports)
             flight_dates = detail.find_element_by_css_selector("span[class='flight-data']")
             flightdates.append(flight_dates)
-        data.append({"way" : way, "airline" : airline.text , "departure_airport" : flightairports[0].text, "departure_date" : flightdates[0].text, "departure_time" : flightdates[0].text, "duration" : duration.text, "stops" : stops.text, "arrival_airport" : flightairports[1].text ,"arrival_date" : flightdates[0].text , "arrival_time" : flighttimes[1].text , "price" : price.text[3:-1]})
+        data.append({"way" : way, "airline" : airline.text , "departure_airport" : flightairports[0].text, "departure_date" : flightdates[0].text, "departure_time" : flightdates[0].text, "duration" : duration.text, "stops" : stops.text, "arrival_airport" : flightairports[1].text ,"arrival_date" : flightdates[0].text , "arrival_time" : flighttimes[1].text , "price" : price.text[3:-1] , "run_id" : run_number})
+
+def create_run():
+    q = engine.execute("INSERT INTO runs(departure_city,arrival_city,time) VALUES ('" + departure_city + "', '" + arrival_city + "', current_timestamp) RETURNING id;")
+    q_result = q.first()[0]
+    return q_result
 
 def psql_insert_copy(table, conn, keys, data_iter):
     # gets a DBAPI connection that can provide a cursor
@@ -68,14 +75,16 @@ def psql_insert_copy(table, conn, keys, data_iter):
         sql = 'COPY {} ({}) FROM STDIN WITH CSV'.format(
             table_name, columns)
         cur.copy_expert(sql=sql, file=s_buf)
-        pprint("INSERTED INTO DATABASE")
+        pprint('Finished')
 
 for day in range(search_period):
     outbound_date = (date + TimeDelta(days=day)).strftime('%Y-%m-%d')
     inbound_date = (date + TimeDelta(days=trip_leght) + TimeDelta(days=day)).strftime('%Y-%m-%d')
+    engine = create_engine(DBPATH)
+    run_number = create_run()
     print('To: ' + outbound_date + '  From: ' + inbound_date)
     # Loading webdriver and waiting for page
-    urlpage = 'https://www.maxmilhas.com.br/busca-passagens-aereas/RT/HOU/RIO/' + outbound_date + '/' + inbound_date + '/1/0/0/EC'
+    urlpage = 'https://www.maxmilhas.com.br/busca-passagens-aereas/RT/' + departure_city + '/' + arrival_city + '/' + outbound_date + '/' + inbound_date + '/1/0/0/EC'
     driver = webdriver.Firefox(options=options)
     driver.get(urlpage)
     #driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
@@ -91,5 +100,4 @@ for day in range(search_period):
     driver.quit()
 
 df = pd.DataFrame(data)
-engine = create_engine(DBPATH)
 df.to_sql(db_table, engine, method=psql_insert_copy, if_exists='append', index=False)
