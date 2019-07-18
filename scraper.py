@@ -48,7 +48,7 @@ def scrape(way):
             flightairports.append(flight_airports)
             flight_dates = detail.find_element_by_css_selector("span[class='flight-data']")
             flightdates.append(flight_dates)
-        data.append({"way" : way, "airline" : airline.text , "departure_airport" : flightairports[0].text, "departure_date" : flightdates[0].text, "departure_time" : flightdates[0].text, "duration" : duration.text, "stops" : stops.text, "arrival_airport" : flightairports[1].text ,"arrival_date" : flightdates[0].text , "arrival_time" : flighttimes[1].text , "price" : price.text[:-1]})
+        data.append({"way" : way, "airline" : airline.text , "departure_airport" : flightairports[0].text, "departure_date" : flightdates[0].text, "departure_time" : flightdates[0].text, "duration" : duration.text, "stops" : stops.text, "arrival_airport" : flightairports[1].text ,"arrival_date" : flightdates[0].text , "arrival_time" : flighttimes[1].text , "price" : price.text[3:-1]})
 
 def psql_insert_copy(table, conn, keys, data_iter):
     # gets a DBAPI connection that can provide a cursor
@@ -91,6 +91,5 @@ for day in range(search_period):
     driver.quit()
 
 df = pd.DataFrame(data)
-#df.to_csv('maxmilhas-mia-rio.csv')
 engine = create_engine(DBPATH)
 df.to_sql(db_table, engine, method=psql_insert_copy, if_exists='append', index=False)
