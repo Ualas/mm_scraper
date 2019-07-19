@@ -13,11 +13,8 @@ import csv
 from io import StringIO
 from sqlalchemy import create_engine
 
-options = FirefoxOptions()
-options.add_argument("--headless")
 load_dotenv()
 DBPATH = os.getenv('DBPATH')
-engine = create_engine(DBPATH)
 
 s = '2019-09-15'
 search_period = 1
@@ -26,9 +23,8 @@ departure_city = 'HOU'
 arrival_city = 'RIO'
 data = []
 db_table = 'flights'
-date = DateTime.strptime(s, "%Y-%m-%d")
 
-def create_run():
+def create_run(engine):
     q = engine.execute("INSERT INTO runs(departure_city,arrival_city,datetime) VALUES ('" + departure_city + "', '" + arrival_city + "', current_timestamp) RETURNING id;")
     q_result = q.first()[0]
     return q_result
@@ -60,12 +56,15 @@ def run_driver(run_number):
             data.append({"way" : way, "airline" : airline.text , "departure_airport" : flightairports[0].text, "departure_date" : flightdates[0].text, "departure_time" : flighttimes[0].text, "duration" : duration.text, "stops" : stops.text, "arrival_airport" : flightairports[1].text ,"arrival_date" : flightdates[0].text , "arrival_time" : flighttimes[1].text , "price" : price.text[3:-1] , "run_id" : run_number})
 
     for day in range(search_period):
+        date = DateTime.strptime(s, "%Y-%m-%d")
         outbound_date = (date + TimeDelta(days=day)).strftime('%Y-%m-%d')
         inbound_date = (date + TimeDelta(days=trip_leght) + TimeDelta(days=day)).strftime('%Y-%m-%d')
-        print('To: ' + outbound_date + '  From: ' + inbound_date)
         urlpage = 'https://www.maxmilhas.com.br/busca-passagens-aereas/RT/' + departure_city + '/' + arrival_city + '/' + outbound_date + '/' + inbound_date + '/1/0/0/EC'
+        options = FirefoxOptions()
+        options.add_argument("--headless")
         driver = webdriver.Firefox(options=options)
         driver.get(urlpage)
+        print('To: ' + outbound_date + '  From: ' + inbound_date)
         time.sleep(40)
         try:
             scrape("Outbound")
@@ -74,7 +73,7 @@ def run_driver(run_number):
         except: continue
         driver.quit()
 
-def insert_db(data):
+def insert_db(data,engine):
     def psql_insert_copy(table, conn, keys, data_iter):
         # gets a DBAPI connection that can provide a cursor
         dbapi_conn = conn.connection
@@ -96,9 +95,10 @@ def insert_db(data):
     df.to_sql(db_table, engine, method=psql_insert_copy, if_exists='append', index=False)
 
 def main():
-    run_number = create_run()
+    engine = create_engine(DBPATH)
+    run_number = create_run(engine)
     run_driver(run_number)
-    insert_db(data)
+    insert_db(data,engine)
     pprint('Finished')
 
 if __name__ == "__main__":
