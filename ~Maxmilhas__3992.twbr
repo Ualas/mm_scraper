@@ -1,0 +1,766 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20192.19.1017.1638                               -->
+<workbook source-build='2019.2.5 (20192.19.1017.1638)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <AutoCreateAndUpdateDSDPhoneLayouts ignorable='true' predowngraded='true' />
+    <SheetIdentifierTracking ignorable='true' predowngraded='true' />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='flights (mm)' inline='true' name='federated.0r7kunm013hy401gjcsq808310x6' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='localhost' name='postgres.0dpyv6n03dts91165kdvg0z5cuab'>
+            <connection authentication='username-password' class='postgres' dbname='mm' odbc-native-protocol='' one-time-sql='' port='5432' server='localhost' username='postgres' />
+          </named-connection>
+        </named-connections>
+        <relation join='inner' type='join'>
+          <clause type='join'>
+            <expression op='='>
+              <expression op='[flights].[run_id]' />
+              <expression op='[runs].[id]' />
+            </expression>
+          </clause>
+          <relation connection='postgres.0dpyv6n03dts91165kdvg0z5cuab' name='flights' table='[public].[flights]' type='table'>
+            <columns>
+              <column datatype='date' date-parse-format='dd/MM/yy' name='arrival_date' />
+              <column datatype='date' date-parse-format='dd/MM/yy' name='departure_date' />
+            </columns>
+          </relation>
+          <relation connection='postgres.0dpyv6n03dts91165kdvg0z5cuab' name='runs' table='[public].[runs]' type='table' />
+        </relation>
+        <cols>
+          <map key='[airline]' value='[flights].[airline]' />
+          <map key='[arrival_airport]' value='[flights].[arrival_airport]' />
+          <map key='[arrival_city]' value='[runs].[arrival_city]' />
+          <map key='[arrival_date]' value='[flights].[arrival_date]' />
+          <map key='[arrival_time]' value='[flights].[arrival_time]' />
+          <map key='[datetime]' value='[runs].[datetime]' />
+          <map key='[departure_airport]' value='[flights].[departure_airport]' />
+          <map key='[departure_city]' value='[runs].[departure_city]' />
+          <map key='[departure_date]' value='[flights].[departure_date]' />
+          <map key='[departure_time]' value='[flights].[departure_time]' />
+          <map key='[duration]' value='[flights].[duration]' />
+          <map key='[id (runs)]' value='[runs].[id]' />
+          <map key='[id]' value='[flights].[id]' />
+          <map key='[price]' value='[flights].[price]' />
+          <map key='[price_money]' value='[flights].[price_money]' />
+          <map key='[run_id]' value='[flights].[run_id]' />
+          <map key='[stops]' value='[flights].[stops]' />
+          <map key='[way]' value='[flights].[way]' />
+        </cols>
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>way</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[way]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>way</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>airline</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[airline]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>airline</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>departure_airport</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[departure_airport]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>departure_airport</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>departure_date</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[departure_date]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>departure_date</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>departure_time</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[departure_time]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>departure_time</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>duration</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[duration]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>duration</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>stops</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[stops]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>stops</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>arrival_airport</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[arrival_airport]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>arrival_airport</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>arrival_date</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[arrival_date]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>arrival_date</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>arrival_time</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[arrival_time]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>arrival_time</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>price</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[price]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>price</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>run_id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[run_id]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>run_id</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>price_money</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[price_money]</local-name>
+            <parent-name>[flights]</parent-name>
+            <remote-alias>price_money</remote-alias>
+            <ordinal>13</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_FLOAT&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_DOUBLE&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[id (runs)]</local-name>
+            <parent-name>[runs]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_INTEGER&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_SLONG&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>departure_city</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[departure_city]</local-name>
+            <parent-name>[runs]</parent-name>
+            <remote-alias>departure_city</remote-alias>
+            <ordinal>16</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>arrival_city</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[arrival_city]</local-name>
+            <parent-name>[runs]</parent-name>
+            <remote-alias>arrival_city</remote-alias>
+            <ordinal>17</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>300</width>
+            <contains-null>true</contains-null>
+            <cast-to-local-type>true</cast-to-local-type>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_WLONGVARCHAR&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_WCHAR&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>datetime</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[datetime]</local-name>
+            <parent-name>[runs]</parent-name>
+            <remote-alias>datetime</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;SQL_TYPE_TIMESTAMP&quot;</attribute>
+              <attribute datatype='string' name='DebugWireType'>&quot;SQL_C_TYPE_TIMESTAMP&quot;</attribute>
+            </attributes>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <column caption='Airline' datatype='string' name='[airline]' role='dimension' type='nominal' />
+      <column caption='Arrival Airport' datatype='string' name='[arrival_airport]' role='dimension' type='nominal' />
+      <column caption='Arrival City' datatype='string' name='[arrival_city]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
+      <column aggregation='Count' caption='Arrival Date' datatype='date' datatype-customized='true' name='[arrival_date]' role='dimension' type='ordinal' />
+      <column caption='Arrival Time' datatype='string' name='[arrival_time]' role='dimension' type='nominal' />
+      <column caption='Departure Airport' datatype='string' name='[departure_airport]' role='dimension' type='nominal' />
+      <column caption='Departure City' datatype='string' name='[departure_city]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
+      <column caption='Departure Date' datatype='date' datatype-customized='true' name='[departure_date]' role='dimension' type='ordinal' />
+      <column caption='Departure Time' datatype='string' name='[departure_time]' role='dimension' type='nominal' />
+      <column caption='Duration' datatype='string' name='[duration]' role='dimension' type='nominal' />
+      <column aggregation='Sum' caption='Id (Runs)' datatype='integer' name='[id (runs)]' role='dimension' type='ordinal' />
+      <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+      <column aggregation='CountD' caption='Price' datatype='string' datatype-customized='true' default-role='measure' default-type='quantitative' name='[price]' role='dimension' type='nominal' />
+      <column datatype='real' name='[price_money]' role='measure' type='quantitative' />
+      <column aggregation='Sum' datatype='integer' hidden='true' name='[run_id]' role='dimension' type='ordinal' />
+      <column caption='Stops' datatype='string' name='[stops]' role='dimension' type='nominal' />
+      <column caption='Way' datatype='string' name='[way]' role='dimension' type='nominal' />
+      <column-instance column='[price_money]' derivation='Max' name='[max:price_money:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[price_money]' derivation='Min' name='[min:price_money:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[price_money]' derivation='Sum' name='[sum:price_money:qk]' pivot='key' type='quantitative' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.647162' measure-ordering='alphabetic' measure-percentage='0.352838' rowDisplayCount='100000' show-hidden-fields='true' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[:Measure Names]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>&quot;[federated.0r7kunm013hy401gjcsq808310x6].[min:price_money:qk]&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;[federated.0r7kunm013hy401gjcsq808310x6].[max:price_money:qk]&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;[federated.0r7kunm013hy401gjcsq808310x6].[sum:price_money:qk]&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='IMP:AR'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Inbound Min Prices: Accumulated Runs</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='flights (mm)' name='federated.0r7kunm013hy401gjcsq808310x6' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0r7kunm013hy401gjcsq808310x6'>
+            <column caption='Departure Date' datatype='date' datatype-customized='true' name='[departure_date]' role='dimension' type='ordinal' />
+            <column aggregation='Sum' caption='Id (Runs)' datatype='integer' name='[id (runs)]' role='dimension' type='ordinal' />
+            <column-instance column='[price_money]' derivation='Min' name='[min:price_money:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[departure_date]' derivation='None' name='[none:departure_date:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[id (runs)]' derivation='None' name='[none:id (runs):ok]' pivot='key' type='ordinal' />
+            <column-instance column='[way]' derivation='None' name='[none:way:nk]' pivot='key' type='nominal' />
+            <column datatype='real' name='[price_money]' role='measure' type='quantitative' />
+            <column caption='Way' datatype='string' name='[way]' role='dimension' type='nominal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]'>
+            <groupfilter function='except' user:ui-domain='relevant' user:ui-enumeration='exclusive' user:ui-marker='enumerate'>
+              <groupfilter function='level-members' level='[none:id (runs):ok]' />
+              <groupfilter function='union'>
+                <groupfilter function='member' level='[none:id (runs):ok]' member='111' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='112' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='113' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='114' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='115' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='117' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='118' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='119' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='120' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='121' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='123' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='124' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='125' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='126' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='127' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='129' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='130' />
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <filter class='categorical' column='[federated.0r7kunm013hy401gjcsq808310x6].[none:way:nk]'>
+            <groupfilter function='member' level='[none:way:nk]' member='&quot;Inbound&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]</column>
+            <column>[federated.0r7kunm013hy401gjcsq808310x6].[none:way:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0r7kunm013hy401gjcsq808310x6].[min:price_money:qk]' field-type='quantitative' max='4000.0' min='0.0' range-type='fixed' scope='rows' type='space' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='2' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows>[federated.0r7kunm013hy401gjcsq808310x6].[min:price_money:qk]</rows>
+        <cols>[federated.0r7kunm013hy401gjcsq808310x6].[none:departure_date:qk]</cols>
+      </table>
+      <simple-id uuid='{E730D344-D56C-4518-8598-2C40FAAA7FFC}' />
+    </worksheet>
+    <worksheet name='OMP:AR'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Outbound Min Prices: Accumulated Runs</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='flights (mm)' name='federated.0r7kunm013hy401gjcsq808310x6' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0r7kunm013hy401gjcsq808310x6'>
+            <column caption='Departure Date' datatype='date' datatype-customized='true' name='[departure_date]' role='dimension' type='ordinal' />
+            <column aggregation='Sum' caption='Id (Runs)' datatype='integer' name='[id (runs)]' role='dimension' type='ordinal' />
+            <column-instance column='[price_money]' derivation='Min' name='[min:price_money:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[departure_date]' derivation='None' name='[none:departure_date:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[id (runs)]' derivation='None' name='[none:id (runs):ok]' pivot='key' type='ordinal' />
+            <column-instance column='[way]' derivation='None' name='[none:way:nk]' pivot='key' type='nominal' />
+            <column datatype='real' name='[price_money]' role='measure' type='quantitative' />
+            <column caption='Way' datatype='string' name='[way]' role='dimension' type='nominal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]'>
+            <groupfilter function='except' user:ui-domain='relevant' user:ui-enumeration='exclusive' user:ui-marker='enumerate'>
+              <groupfilter function='level-members' level='[none:id (runs):ok]' />
+              <groupfilter function='union'>
+                <groupfilter function='member' level='[none:id (runs):ok]' member='111' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='112' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='113' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='114' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='115' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='117' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='118' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='119' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='120' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='121' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='123' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='124' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='125' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='126' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='127' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='129' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='130' />
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <filter class='categorical' column='[federated.0r7kunm013hy401gjcsq808310x6].[none:way:nk]'>
+            <groupfilter function='member' level='[none:way:nk]' member='&quot;Outbound&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]</column>
+            <column>[federated.0r7kunm013hy401gjcsq808310x6].[none:way:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0r7kunm013hy401gjcsq808310x6].[min:price_money:qk]' field-type='quantitative' max='4000.0' min='0.0' range-type='fixed' scope='rows' type='space' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='2' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows>[federated.0r7kunm013hy401gjcsq808310x6].[min:price_money:qk]</rows>
+        <cols>[federated.0r7kunm013hy401gjcsq808310x6].[none:departure_date:qk]</cols>
+      </table>
+      <simple-id uuid='{E9FA713B-D2C6-47AC-8B1A-583CC67C23E1}' />
+    </worksheet>
+    <worksheet name='OMP:AR (2)'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Outbound Min Prices: Accumulated Runs</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='flights (mm)' name='federated.0r7kunm013hy401gjcsq808310x6' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0r7kunm013hy401gjcsq808310x6'>
+            <column caption='Departure Date' datatype='date' datatype-customized='true' name='[departure_date]' role='dimension' type='ordinal' />
+            <column aggregation='Sum' caption='Id (Runs)' datatype='integer' name='[id (runs)]' role='dimension' type='ordinal' />
+            <column-instance column='[price_money]' derivation='Min' name='[min:price_money:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[departure_date]' derivation='None' name='[none:departure_date:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[id (runs)]' derivation='None' name='[none:id (runs):ok]' pivot='key' type='ordinal' />
+            <column-instance column='[way]' derivation='None' name='[none:way:nk]' pivot='key' type='nominal' />
+            <column datatype='real' name='[price_money]' role='measure' type='quantitative' />
+            <column caption='Way' datatype='string' name='[way]' role='dimension' type='nominal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]'>
+            <groupfilter function='except' user:ui-domain='relevant' user:ui-enumeration='exclusive' user:ui-marker='enumerate'>
+              <groupfilter function='level-members' level='[none:id (runs):ok]' />
+              <groupfilter function='union'>
+                <groupfilter function='member' level='[none:id (runs):ok]' member='111' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='112' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='113' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='114' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='115' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='117' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='118' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='119' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='120' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='121' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='123' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='124' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='125' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='126' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='127' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='129' />
+                <groupfilter function='member' level='[none:id (runs):ok]' member='130' />
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <filter class='categorical' column='[federated.0r7kunm013hy401gjcsq808310x6].[none:way:nk]'>
+            <groupfilter function='member' level='[none:way:nk]' member='&quot;Outbound&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]</column>
+            <column>[federated.0r7kunm013hy401gjcsq808310x6].[none:way:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0r7kunm013hy401gjcsq808310x6].[min:price_money:qk]' field-type='quantitative' max='4000.0' min='0.0' range-type='fixed' scope='rows' type='space' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='2' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows>[federated.0r7kunm013hy401gjcsq808310x6].[min:price_money:qk]</rows>
+        <cols>[federated.0r7kunm013hy401gjcsq808310x6].[none:departure_date:qk]</cols>
+      </table>
+      <simple-id uuid='{A0EE496D-3DD7-40F4-902E-FF5A15D166AC}' />
+    </worksheet>
+  </worksheets>
+  <dashboards>
+    <dashboard name='Dashboard 1'>
+      <style />
+      <size maxheight='800' maxwidth='1000' minheight='800' minwidth='1000' />
+      <zones>
+        <zone h='100000' id='14' type='layout-basic' w='100000' x='0' y='0'>
+          <zone h='98000' id='13' name='OMP:AR' w='98400' x='800' y='1000'>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <size maxheight='700' minheight='700' sizing-mode='vscroll' />
+          <zones>
+            <zone h='100000' id='11' type='layout-basic' w='100000' x='0' y='0'>
+              <zone h='84000' id='12' param='vert' type='layout-flow' w='84000' x='8000' y='8000' />
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='8' />
+              </zone-style>
+            </zone>
+          </zones>
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{30415E5D-1DFC-4F40-99D4-F1EBDD1F4720}' />
+    </dashboard>
+  </dashboards>
+  <windows source-height='30'>
+    <window class='worksheet' name='OMP:AR'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card param='[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]' type='filter' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{68B61408-E2EC-48D0-A25E-5512D15A89A3}' />
+    </window>
+    <window class='worksheet' maximized='true' name='OMP:AR (2)'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card param='[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]' type='filter' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{CBB8485E-0D81-441B-8679-799352EA6E50}' />
+    </window>
+    <window class='worksheet' name='IMP:AR'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card param='[federated.0r7kunm013hy401gjcsq808310x6].[none:id (runs):ok]' type='filter' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{AE3F2AE3-368A-4F8E-BA56-3DC9013E7867}' />
+    </window>
+    <window class='dashboard' name='Dashboard 1'>
+      <viewpoints>
+        <viewpoint name='OMP:AR'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='-1' />
+      <simple-id uuid='{7DCF9980-910A-4786-B8D7-66F6C53A1251}' />
+    </window>
+  </windows>
+</workbook>
