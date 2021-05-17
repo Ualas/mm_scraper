@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-# import libraries
 import urllib.request
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 import time
 import pandas as pd
@@ -14,73 +12,58 @@ from dotenv import load_dotenv
 import csv
 from io import StringIO
 from sqlalchemy import create_engine
+import undetected_chromedriver as uc
 
 load_dotenv()
 DBPATH = os.getenv('DBPATH')
 
-s = '2021-07-01'
-search_period = 1
-trip_leght = 180
-departure_city = 'BSB'
-arrival_city = 'IAH'
+routes = [
+            # {"startdate" : '2021-07-01', "departure_city" : 'RIO', "arrival_city" : 'CUN'},
+            {"startdate" : '2021-07-01', "departure_city" : 'RIO', "arrival_city" : 'MEX'},
+            {"startdate" : '2021-07-01', "departure_city" : 'RIO', "arrival_city" : 'AUA'}
+            ]
+
+search_period = 30
 data = []
+day_data = []
+flights_data = []
 db_table = 'flights'
 
-def create_run(engine):
-    q = engine.execute("INSERT INTO runs(departure_city,arrival_city,datetime) VALUES ('" + departure_city + "', '" + arrival_city + "', current_timestamp) RETURNING id;")
+def create_run(engine, departure_city, arrival_city):
+    run_route = departure_city + " to " + arrival_city
+    q = engine.execute("INSERT INTO runs(departure_city,arrival_city,datetime, route) VALUES ('" + departure_city + "', '" + arrival_city + "', current_timestamp, '"+run_route+"') RETURNING id;")
     q_result = q.first()[0]
     return q_result
 
-def run_driver(run_number):
+def run_driver(run_number, s, departure_city, arrival_city):
     def scrape(way):
-        outbound_flights = driver.find_elements_by_css_selector("div[class^='css-19ivl5o']")
+        outbound_flights = driver.find_elements_by_css_selector("div[class^='css-lhlz7a']")
         count_flights = len(outbound_flights)
         print('Number of Flights:', count_flights)
         if count_flights == 0:
             pprint("Blocked: Sleeping a little")
             time.sleep(600)
         for outbound_flight in outbound_flights:
-            airline = outbound_flight.find_element_by_css_selector("div[class='css-1gaumbn']")
-            duration = outbound_flight.find_element_by_css_selector("span[class='time']")
-            stops = outbound_flight.find_element_by_css_selector("span[class='stops']")
             price = outbound_flight.find_element_by_css_selector("h5[class='highlight-price']")
-            price = price.text[3:-1].replace('.','')
-            price = price.replace(',','.')
-            origin_details = outbound_flight.find_element_by_css_selector("div[class='css-1ka7a5g']")
-            destination_details = outbound_flight.find_element_by_css_selector("div[class='css-m0x1fd']")
-            destination_airport = destination_details.text[:-6]
-            destination_time = destination_details.text[4:]
+            price = price.text[3:].replace('.','').replace(',','.')
+            if price:
+                flights_data.append({"departure_date" : outbound_date, "price" : price, "run_id" : run_number})
 
-            if "\n" in destination_airport:
-                destination_airport = destination_airport[:-3]
-            if "\n+1" in destination_time:
-                destination_time = destination_time[:-3]
-                o_date = DateTime.strptime(outbound_date, "%Y-%m-%d")
-                arrival_date = (o_date + TimeDelta(days=1)).strftime('%d/%m/%Y')
-            else:
-                arrival_date = DateTime.strptime(outbound_date, "%Y-%m-%d")
-                arrival_date = arrival_date.strftime('%d/%m/%Y')
-            pprint(arrival_date)
-            #data.append({"way" : way, "airline" : airline.text[4:] , "departure_airport" : origin_details.text[:-6], "departure_date" : outbound_date, "departure_time" : origin_details.text[4:], "duration" : duration.text, "stops" : stops.text, "arrival_airport" : destination_airport,"arrival_date" : arrival_date , "arrival_time" : destination_time , "price" : price , "run_id" : run_number})
-        #pprint(data)
     for day in range(search_period):
         date = DateTime.strptime(s, "%Y-%m-%d")
         outbound_date = (date + TimeDelta(days=day)).strftime('%Y-%m-%d')
-        #inbound_date = (date + TimeDelta(days=trip_leght) + TimeDelta(days=day)).strftime('%Y-%m-%d')
         urlpage = 'https://www.maxmilhas.com.br/busca-passagens-aereas/OW/' + departure_city + '/' + arrival_city + '/' + outbound_date + '/1/0/0/EC'
-        options = FirefoxOptions()
+        options = uc.ChromeOptions()
         #options.add_argument("--headless")
-        driver = webdriver.Firefox(options=options,executable_path=r'/usr/local/bin/geckodriver')
+        driver = uc.Chrome(options=options)
         driver.get(urlpage)
-        print('IDA: ' + outbound_date)
-        time.sleep(10)
-        #for _ in range(60):
-        #    html = driver.find_element_by_tag_name('html')
-        #    html.send_keys(Keys.PAGE_DOWN)
-        #    time.sleep(0.5)
+        #driver.minimize_window()
+        print(departure_city, 'to', arrival_city, 'em ' + outbound_date)
+        time.sleep(40)
         scrape("Outbound")
-
         driver.quit()
+    
+    return flights_data
 
 def insert_db(data,engine):
     def psql_insert_copy(table, conn, keys, data_iter):
@@ -105,11 +88,16 @@ def insert_db(data,engine):
 
 def main():
     engine = create_engine(DBPATH)
-#    run_number = create_run(engine)
-    run_number = 0
-    run_driver(run_number)
-#    insert_db(data,engine)
-    pprint("Finished")
+    for route in routes:
+        startdate = route['startdate']
+        departure_city = route['departure_city']
+        arrival_city = route['arrival_city']
+        
+        run_number = create_run(engine, departure_city, arrival_city)
+        data = run_driver(run_number, startdate, departure_city, arrival_city)
+        insert_db(data, engine)
+
+    print("Finished")
 
 if __name__ == "__main__":
     main()
